@@ -1,31 +1,33 @@
-#include "./actionnneurs.hpp"
+#include "./actionneurs.hpp"
 
-servomotor::void enable(){
+void servomotor::enable(){
   mraa_pwm_enable(this->pwm, 1);
 }
 
-servomotor::void disable(){
+void servomotor::disable(){
   mraa_pwm_enable(this->pwm, 0);
 }
 
-servomotor::float read_pos(){
-  return (int)((((mraa_pwm_read(pwm)*DEFAULT_T)-DEFAULT_PUlSE_MIN)*180/DEFAULT_PULSE_MAX)+0.5)
+float servomotor::read_pos(){
+  float temp =mraa_pwm_read(pwm)*DEFAULT_T*1000;
+  temp =((180*temp)/(D_PULSE))-(180*DEFAULT_PULSE_MIN/(D_PULSE));
+  return (int)(temp+0.5);
 }
 
-servomotor::float set_speed(float s){
+float servomotor::set_speed(float s){
   float temp = s;
   if ((temp <= 0)||(temp>=45)){
     temp = -1;
   }
   return temp;
 }
-servomotor::int set_pos(int s){
-  actual_pos = read_pos();
+float servomotor::set_pos(float s){
+  float actual_pos = read_pos();
   if (actual_pos!=s)
-    mraa_pwm_pulsewidth_us(pwm,(int)((s*DEFAULT_PULSE_MAX/180)+0.5));
+    mraa_pwm_pulsewidth_us(pwm,(int)(((s*D_PULSE/180)+DEFAULT_PULSE_MIN)+0.5));
   return read_pos();
 }
 
-servomotor:: float read_speed() {
+float servomotor::read_speed() {
   return speed;
 }
