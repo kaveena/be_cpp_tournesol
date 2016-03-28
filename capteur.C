@@ -3,28 +3,24 @@
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include "capteur.hpp"
+unsigned lux[9] = {0,1,3,6,10,15,35,80,100};
+unsigned int photodiode::get_lux(){
+  get_valeur();
+  int indice = (int)(valeur/100);
+  indice = indice - 1;
+  if (indice<0) indice = 0;
+  else if (indice>8) indice = 8;
+  return lux[indice];
+}
 
-class capteur {
+float micro::get_seuil(){
+  return this->seuil_bruit;
+}
 
-protected
-int pin;
-
-// constructeur 
-	capteur () { 
-		// initialisation
-			mraa_init();
-			m_gpio = mraa_gpio_init(pin);  // définir la PIN 
-			mraa_gpio_dir (m_gpio, MRAA_GPIO_IN);
-	}
-};
-
-
-class photodiode: public capteur, public analog{
-};
-
-class micro: public capteur, public analog{
-};
-
+void micro::set_seuil(float th){
+  this->seuil_bruit = th;
+}
+  
 
 
 

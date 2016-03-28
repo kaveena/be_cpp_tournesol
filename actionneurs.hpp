@@ -19,7 +19,6 @@ public:
   }
 
 };
-
 class servomotor : protected actionneurs{
 
 private :
@@ -51,10 +50,6 @@ public :
 	IN : desired angular speed
 	OUT : actual angular speed
   */
-	
-  float set_speed(float s);
-	
-  float read_speed();
 	
 };
 class lcd{};
