@@ -9,13 +9,13 @@ class analog {
 protected:
   float valeur;//peut etre une entree ou une sortie dependant de la deuxieme classe associee
 public:
-  virtual float get_val();
+  virtual float get_val()=0;
 };
 class digital {
 protected:
   bool valeur;
 public:
-  virtual bool get_val();
+  virtual bool get_val()=0;
 };
 
 #endif

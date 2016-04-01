@@ -54,4 +54,25 @@ public :
 };
 class lcd{};
 
+class led: protected digital, protected actionneurs{
+  
+  //constructeur
+  protected:
+  mraa_gpio_context gpio_out;
+  public:
+  led(unsigned int x):actionneurs(x),digital(){
+    gpio_out = mraa_gpio_init(this->pin);
+    mraa_gpio_dir(gpio_out, MRAA_GPIO_OUT);
+  }
+  ~led(){
+    mraa_gpio_close(gpio_out);
+  }
+  void set_val(bool allume);
+  virtual bool get_val(){
+    return this->valeur;
+  }
+
+
+} ;
+
 #endif

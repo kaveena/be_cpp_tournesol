@@ -31,3 +31,11 @@ float servomotor::set_pos(float s){
 float servomotor::read_speed() {
   return speed;
 }
+
+void led ::set_val(bool allume) {
+  this->valeur = allume;
+  mraa_gpio_write (gpio_out, allume);
+}
+
+
+

@@ -5,7 +5,7 @@
 #include "capteur.hpp"
 unsigned lux[9] = {0,1,3,6,10,15,35,80,100};
 unsigned int photodiode::get_lux(){
-  get_valeur();
+  get_val();
   int indice = (int)(valeur/100);
   indice = indice - 1;
   if (indice<0) indice = 0;
