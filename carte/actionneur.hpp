@@ -23,7 +23,7 @@ protected:
 public:
   //contructeurs
   actionneur(){}
-  actionneurs(int x);//port associe a l'actionneur
+  actionneur(unsigned int x);//port associe a l'actionneur
 };
 
 
@@ -40,10 +40,11 @@ private :
   mraa_pwm_context pwm;
 public :
   //constructeurs
-  servomotor():actionneur(){} 
-  servomotor(unsigned int x):actionneur(x);//prend en entree le port asssocie au sermoteur
+  servomotor();
+  servomotor(unsigned int x);//prend en entree le port asssocie au sermoteur
   //desctructeur
   ~servomotor();
+  void set_pin(unsigned int x);
   //active la PWM qui commande le servomoteur
   void enable();
   //disactive la PWM
@@ -66,10 +67,11 @@ class led: protected actionneur, protected digital{
   mraa_gpio_context gpio_out;
   public:
   //constructeurs
-  led():actionneur(),digital(){}
-  led(unsigned int x):actionneur(x),digital();
+  led();
+  led(unsigned int x);
   //desctructeur
   ~led();
+  void set_pin(unsigned int x);
   void set_val(bool allume);
   void allumer();
   void eteindre();

@@ -11,6 +11,10 @@ actionneur::actionneur(unsigned int x){
 ###############################################################################
 */
 
+servomotor::servomotor():actionneur(){
+  pwm = NULL;
+}
+
 servomotor::servomotor(unsigned int x):actionneur(x){
   pwm = mraa_pwm_init(x);
   mraa_pwm_period_ms(pwm,DEFAULT_T);
@@ -18,6 +22,12 @@ servomotor::servomotor(unsigned int x):actionneur(x){
 
 servomotor::~servomotor(){
   mraa_pwm_close(pwm);
+}
+
+void servomotor::set_pin(unsigned int x){
+  this->pin = x;
+  pwm = mraa_pwm_init(x);
+  mraa_pwm_period_ms(pwm,DEFAULT_T);
 }
 
 void servomotor::enable(){
@@ -47,6 +57,11 @@ int servomotor::set_pos(int s){
                                LA CLASSE LED
 ###############################################################################
 */
+
+led::led():actionneur(),digital(){
+  gpio_out = NULL;
+}
+
 led::led(unsigned int x): actionneur(x),digital(){
   gpio_out = mraa_gpio_init(this->pin);
   mraa_gpio_dir(gpio_out, MRAA_GPIO_OUT);
@@ -54,6 +69,12 @@ led::led(unsigned int x): actionneur(x),digital(){
 
 led::~led(){
   mraa_gpio_close(gpio_out);
+}
+
+void led::set_pin(unsigned int x){
+  this->pin = x;
+  gpio_out = mraa_gpio_init(this->pin);
+  mraa_gpio_dir(gpio_out, MRAA_GPIO_OUT);
 }
 
 void led ::set_val(bool allume) {
@@ -69,7 +90,7 @@ void led::eteindre(){
   set_val(false);
 }
 
-virtual bool led::get_val(){
+bool led::get_val(){
   return this->valeur;
 }
 

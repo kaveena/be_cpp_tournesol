@@ -4,72 +4,73 @@
 #include <mraa/aio.h>
 #include <mraa/gpio.h>
 #include "type.hpp"
-
+/*
+###############################################################################
+                               LA CLASSE CAPTEUR
+###############################################################################
+*/
 
 class capteur {
 protected:
   unsigned int pin;
 public:
    capteur(){}
-   capteur(int x){
-    pin = x;
-  }
+  capteur(unsigned int x);
 };
+
+/*
+###############################################################################
+                               LA CLASSE PHOTODIODE
+###############################################################################
+*/
 class photodiode: protected capteur, protected analog {
 private:
   mraa_aio_context analog_in;
 public :
-  photodiode():capteur(),analog(){} 
-  photodiode(unsigned int x):capteur(x),analog(){
-    analog_in = mraa_aio_init(this->pin);
-  }
-  ~photodiode(){
-    mraa_aio_close(analog_in);
-  }
-  virtual float get_val(){
-    valeur = mraa_aio_read(analog_in); 
-    return this->valeur;
-  }
+  photodiode();
+  photodiode(unsigned int x);
+  ~photodiode();
+  void set_pin(unsigned int x);
+  virtual float get_val();
   unsigned int get_lux();
 };
+
+/*
+###############################################################################
+                               LA CLASSE MICRO
+###############################################################################
+*/
+
 class micro: protected capteur, protected analog {
 private:
   mraa_aio_context analog_in;
   float seuil_bruit;
 public:
-  micro(unsigned int x):capteur(x), analog(){
-    analog_in = mraa_aio_init(this->pin);
-    seuil_bruit =0;
-  }
-  micro(unsigned int x, float y):capteur(x), analog(){
-    analog_in = mraa_aio_init(this->pin);
-    seuil_bruit = y;
-  }
-  ~micro(){
-    mraa_aio_close(analog_in);
-  }
-  virtual float get_val(){
-    this->valeur = mraa_aio_read(analog_in);
-    return this->valeur;
-  }
+  micro();
+  micro(unsigned int x);
+  micro(unsigned int x, float y);
+  ~micro();
+  void set_pin(unsigned int x);
+  virtual float get_val();
   float get_seuil();
   void set_seuil(float th);
 };
+
+/*
+###############################################################################
+                               LA CLASSE BOUTON TOUCH
+###############################################################################
+*/
+
 class bouton_touch: protected capteur, protected digital{
 protected:
   mraa_gpio_context gpio_in;
 public:
-  bouton_touch(unsigned int x):capteur(x),digital(){
-    gpio_in = mraa_gpio_init(this->pin);
-    mraa_gpio_dir(gpio_in, MRAA_GPIO_IN);
-  }
-  ~bouton_touch(){
-    mraa_gpio_close(gpio_in);
-  }
-  virtual bool get_val(){
-    valeur = (bool)mraa_gpio_read(gpio_in);
-    return valeur;
-  }
+  bouton_touch();
+  bouton_touch(unsigned int x);
+  ~bouton_touch();
+  void set_pin(unsigned int x);
+  virtual bool get_val();
 };
 
 #endif
