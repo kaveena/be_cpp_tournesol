@@ -86,7 +86,7 @@ public :
   potentiometer();
   potentiometer(unsigned int x);
   ~potentiometer();
-  void set_pin(unsigned int x);
+  void potentiometer(unsigned int x);
   virtual float get_val();
 };
 

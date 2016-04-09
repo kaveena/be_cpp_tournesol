@@ -57,42 +57,6 @@ public :
 
 /*
 ###############################################################################
-                               LA CLASSE BUZZER
-###############################################################################
-*/
-
-class buzzer : protected actionneur{
-
-private :
-  int position;
-  mraa_pwm_context pwm;
-  int mel;
-
-public :
-  //constructeurs
-  buzzer();
-  buzzer(unsigned int x);//prend en entree le port asssocie au sermoteur
-  //desctructeur
-  ~buzzer();
-  void set_pin(unsigned int x);
-  //active la PWM qui commande le servomoteur
-  void enable();
-  //disactive la PWM
-  void disable();
-  //Fonction qui retourne l'angle du servomoteur
-  void set_mel(unsigned int m);
-  int read_mel();
-  void stop(){
-    mraa_pwm_period_us(pwm,1);
-    mraa_pwm_pulsewidth_us(pwm,0);
-  }
-};
-
-
-
-
-/*
-###############################################################################
                                LA CLASSE LED
 ###############################################################################
 */

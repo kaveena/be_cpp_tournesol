@@ -129,7 +129,7 @@ potentiometer::potentiometer():capteur(),analog(){
 potentiometer::potentiometer(unsigned int x):capteur(x),analog(){
   analog_in = mraa_aio_init(this->pin);
 }
-potentiometer::~potentiometer(){
+potentiometer::potentiometer(){
   if (analog_in!=NULL)
     mraa_aio_close(analog_in);
 }

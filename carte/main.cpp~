@@ -63,22 +63,7 @@ int main(){
   unsigned int mode_avant=0;
   int val_pot_avant=0;
   int poursuite;
-  buzzer mybuzz(6);
   
-
-  myscreen.change_cou(50,100,255);
-  myscreen.print_msg("Welcome","Touch to start");
-  mybuzz.set_mel(0);
-  sleep(1);
-  mybuzz.set_mel(0);
-  sleep(1);
-  mybuzz.set_mel(4);
-  sleep(1);
-  mybuzz.set_mel(4);
-  sleep(1);
-  mybuzz.stop();
-
-
   while(1){
     //--------------------------------------------------------------------------
     if ((!bouton_avant)&&(bouton)){
@@ -95,6 +80,8 @@ int main(){
     // MODE MANUEL
     if (mode ==2){
       if (mode_avant!=mode){
+	myscreen.change_cou(50,100,255);
+	myscreen.print_msg("Welcome","Touch to start");
       }
       mode_avant = 2;
     }

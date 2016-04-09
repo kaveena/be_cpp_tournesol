@@ -71,15 +71,13 @@ void lcd::print_msg(std::string msg_l1, std::string msg_l2){
   // écriture d'un texte
   usleep(1000);
   for (std::string::size_type i = 0; i< 16; ++i){
-    if (i<msg_l1.size()){
+    if (i<msg_l1.size())
       i2cData(m_i2c_lcd_control,msg_l1[i]);
-    }
-    else {
+    else
       i2cData(m_i2c_lcd_control,' ');
-    }
   }
   row = 1;
-  offset = (row_addr[row]);
+  offset = ((column % 16) + row_addr[row]);
   i2Cmd (m_i2c_lcd_control, offset);
   usleep(1000);
   for (std::string::size_type i = 0; i < msg_l2.size(); ++i) {

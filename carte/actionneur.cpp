@@ -1,5 +1,7 @@
 #include "./actionneur.hpp"
 
+float melodies[8] = {523,587,659,659,698.5,784,880,988};
+
 actionneur::actionneur(unsigned int x){
   this->pin = x;
 }
@@ -21,7 +23,8 @@ servomotor::servomotor(unsigned int x):actionneur(x){
 }
 
 servomotor::~servomotor(){
-  mraa_pwm_close(pwm);
+  if (pwm != NULL)
+    mraa_pwm_close(pwm);
 }
 
 void servomotor::set_pin(unsigned int x){
@@ -41,15 +44,71 @@ void servomotor::disable(){
 int servomotor::read_pos(){
   float temp =mraa_pwm_read(pwm)*DEFAULT_T*1000;
   temp =((180*temp)/(D_PULSE))-(180*DEFAULT_PULSE_MIN/(D_PULSE));
-  return (int)(temp+0.5);
+  return (int)(temp);
 }
 
 int servomotor::set_pos(int s){
   int actual_pos = read_pos();
   if (actual_pos!=s)
-    mraa_pwm_pulsewidth_us(pwm,(int)(((s*D_PULSE/180)+DEFAULT_PULSE_MIN)+0.5));
+    mraa_pwm_pulsewidth_us(pwm,(int)(((s*D_PULSE/180)+DEFAULT_PULSE_MIN)));
   return read_pos();
 }
+
+
+/*
+###############################################################################
+                               LA CLASSE BUZZER
+###############################################################################
+*/
+
+buzzer::buzzer():actionneur(){
+  mel = 0;
+  pwm = NULL;
+}
+
+buzzer::buzzer(unsigned int x):actionneur(x){
+  mel = 0;
+  pwm = mraa_pwm_init(x);
+  mraa_pwm_period_ms(pwm,DEFAULT_T);
+}
+
+buzzer::~buzzer(){
+  if (pwm != NULL)
+    mraa_pwm_close(pwm);
+}
+
+void buzzer::set_pin(unsigned int x){
+  this->pin = x;
+  pwm = mraa_pwm_init(x);
+  mraa_pwm_period_ms(pwm,DEFAULT_T);
+}
+
+void buzzer::enable(){
+  mraa_pwm_enable(this->pwm, 1);
+}
+
+void buzzer::disable(){
+  mraa_pwm_enable(this->pwm, 0);
+}
+
+void buzzer::set_mel(unsigned int m){
+  unsigned int m_vrai = m;
+  if (m_vrai>7){
+    m_vrai = 7;
+  }
+  mel = m_vrai;
+  int t = int ((1000000/melodies[m_vrai])+0.5);
+  disable();
+  mraa_pwm_period_us(this->pwm,t);
+  mraa_pwm_pulsewidth_us(this->pwm,(int)(t/5));
+  enable();
+}
+
+int buzzer::read_mel(){
+  return mel;
+}
+
+
 
 
 /*
@@ -68,7 +127,8 @@ led::led(unsigned int x): actionneur(x),digital(){
 }
 
 led::~led(){
-  mraa_gpio_close(gpio_out);
+  if(gpio_out!=NULL)
+    mraa_gpio_close(gpio_out);
 }
 
 void led::set_pin(unsigned int x){

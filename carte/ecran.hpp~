@@ -34,7 +34,8 @@ private:
 public :
   lcd();
   ~lcd();
-  void print_msg(std::string msg_l1,std::string msg_l2);
+  void print_msg_l1(std::string msg);
+  void print_msg_l2(std::string msg);
   void clear_screen();
   void change_cou(int r, int g, int b);
 };

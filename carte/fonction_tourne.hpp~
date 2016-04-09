@@ -8,7 +8,7 @@ int find_max(float luminosite[],int N);
    qui contient la valeur max
    N est la longueur du tableau */
 
-void update_photodiode(float val[], int pos[], tournesol & mysun);
+void update_photodiode(float val[], int pos[], tournesol mysun);
 /* Fonction qui fait une acquisition des
    photodiodes
    port contient les numero de ports des photodiodes

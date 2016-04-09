@@ -3,7 +3,7 @@ CXXFLAGS = -c -Wall
 LDFLAGS = -lmraa
 
 projet: actionneur.o capteur.o tournesol.o fonction_tourne.o ecran.o main.o
-	$(CXX) -o latournesol actionneur.o capteur.o tournesol.o fonction_tourne.o ecran.o main.o $(LDFLAGS)
+	$(CXX) -o latournesol actionneur.o capteur.o tournesol.o fonction_tourne.o main.o $(LDFLAGS)
 
 actionneur.o: actionneur.hpp type.hpp actionneur.cpp
 	$(CXX) $(CXXFLAGS) actionneur.cpp

@@ -24,7 +24,7 @@ mraa_result_t lcd::i2cReg (mraa_i2c_context ctx, int deviceAdress, int addr, uin
     return error;
 }
 
-lcd::lcd(){
+lcd::lcd(int a){
   m_bus=0;
   m_lcd_control_address=0x3E;
   m_rgb_control_address=0x62;
@@ -60,36 +60,18 @@ lcd::~lcd(){
   mraa_i2c_stop(m_i2c_lcd_control);
 }
 
-void lcd::print_msg(std::string msg_l1, std::string msg_l2){
-
+void lcd::print_msg(std::string msg){
+  i2Cmd (m_i2c_lcd_control, LCD_CLEARDISPLAY);
   // positionnement ligne 1 colonne 2
-  clear_screen();
-  int row=0, column=2;
+  int row=1, column=2;
   int row_addr[] = { 0x80, 0xc0, 0x14, 0x54};
   uint8_t offset = ((column % 16) + row_addr[row]);
   i2Cmd (m_i2c_lcd_control, offset);
   // écriture d'un texte
   usleep(1000);
-  for (std::string::size_type i = 0; i< 16; ++i){
-    if (i<msg_l1.size()){
-      i2cData(m_i2c_lcd_control,msg_l1[i]);
-    }
-    else {
-      i2cData(m_i2c_lcd_control,' ');
-    }
+  for (std::string::size_type i = 0; i < msg.size(); ++i) {
+    i2cData (m_i2c_lcd_control, msg[i]);
   }
-  row = 1;
-  offset = (row_addr[row]);
-  i2Cmd (m_i2c_lcd_control, offset);
-  usleep(1000);
-  for (std::string::size_type i = 0; i < msg_l2.size(); ++i) {
-    i2cData (m_i2c_lcd_control, msg_l2[i]);
-  }
-
-}
-
-void lcd::clear_screen(){
-  i2Cmd (m_i2c_lcd_control, LCD_CLEARDISPLAY);
 }
 
 void lcd::change_cou(int r, int g , int b){

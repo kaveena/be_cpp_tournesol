@@ -24,7 +24,9 @@ void update_photodiode(float val[], int pos[], tournesol & mysun){
     for (int j =0; j<mysun.get_nb(); j++){
       val[(i*mysun.get_nb())+j]=temp1[j];
       pos[(i*mysun.get_nb())+j]=temp2[j];
+      cout<<val[(i*mysun.get_nb())+j]<<" ";
     }
+    cout<<endl;
     delete temp1;
     delete temp2;
   }
