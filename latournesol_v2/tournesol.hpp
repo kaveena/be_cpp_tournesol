@@ -4,6 +4,9 @@
 #include "capteur.hpp"
 #define ANGLE_MIN 20
 
+//ANGLE_MIN est l'angle que nous avons entre nos photodiodes qui est de
+//20 deg sur notre prototype
+
 class tournesol {
   
 private :
@@ -26,12 +29,15 @@ public :
   tournesol(unsigned int port_s, unsigned int port_s2,unsigned int nombre, int les_ports[]);
   //destructeur
   ~tournesol();
+  //getters
+  int get_nb();
   float * get_val_cap();
   int * get_pos_cap();
   int get_pos_tourne();
+  //setters
   void set_pos_tourne(int pos);
   void set_pos_cap(int pos);
-  int get_nb();
+  
 
 };
 #endif

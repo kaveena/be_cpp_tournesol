@@ -103,6 +103,7 @@ class led: protected actionneur, protected digital{
   void allumer();
   //eteint la led
   void eteindre();
+  //voir classes meres
   virtual void set_pin(unsigned int x);
   virtual bool get_val();
 } ;

@@ -1,0 +1,17 @@
+#include "actionneur.hpp"
+
+int main(){
+  buzzer mybuzz(3);
+  servomotor myservo(6);
+
+  myservo.set_pos(0);
+  mybuzz.set_vol(0.01);
+  mybuzz.set_mel(0);
+  sleep(1);
+  mybuzz.set_mel(1);
+  myservo.set_pos(180);
+  sleep(1);
+  mybuzz.stop();
+
+  return 0;
+}
