@@ -36,3 +36,5 @@ servomotor	buzzer	¦				¦
 			¦		¦		¦	¦
 			led		photodiode	micro	potentiometer
 --------------------------------------------------------------------------------
+
+ATTENTION: On n'avons pas redéfini le constructeur de recopie de nos objets (qui contiennent des pointeurs) car nous les passons par référence au fonction et que comme un objet est toujours associé a un pin nous n'avons pas considérer le cas ou deux objets pouvait être associé au même pin.
